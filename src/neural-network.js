@@ -859,9 +859,9 @@ export default class NeuralNetwork {
 
   /**
    *
-   * @returns {Function}
+   * @returns {string}
    */
-  toFunction() {
+  toCode() {
     const activation = this.activation;
     function nodeHandle(layers, layerNumber, nodeKey) {
       if (layerNumber === 0) {
@@ -909,7 +909,14 @@ export default class NeuralNetwork {
     } else {
       result = `[${layersAsMath.join(',')}]`;
     }
-    return new Function('input', `return ${result}`);
+    return `return ${result}`;
+  }
+  /**
+   *
+   * @returns {Function}
+   */
+  toFunction() {
+    return new Function('input', this.toCode());
   }
 
   /**
